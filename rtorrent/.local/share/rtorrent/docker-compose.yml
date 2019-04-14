@@ -1,0 +1,25 @@
+version: "3.7"
+
+services: 
+  rtorrent-flood:
+    image: wonderfall/rtorrent-flood
+    restart: always
+    environment: 
+      UID: 1000
+      GID: 1000
+      FLOOD_SECRET: youshallnotpass
+      VIRTUAL_HOST: rtorrent.local
+      VIRTUAL_PORT: 3000
+    tty: true
+    volumes: 
+      - /mnt/data/Letoltes/rtorrent:/data
+      - /mnt/data/Letoltes/flood-db:/flood-db
+
+  nginx-proxy:
+      image: jwilder/nginx-proxy
+      restart: always
+      ports:
+        - 80:80
+      volumes:
+        - /var/run/docker.sock:/tmp/docker.sock:ro
+

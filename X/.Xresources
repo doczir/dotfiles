@@ -1,0 +1,81 @@
+#define nord0 #2E3440
+#define nord1 #3B4252
+#define nord2 #434C5E
+#define nord3 #4C566A
+#define nord4 #D8DEE9
+#define nord5 #E5E9F0
+#define nord6 #ECEFF4
+#define nord7 #8FBCBB
+#define nord8 #88C0D0
+#define nord9 #81A1C1
+#define nord10 #5E81AC
+#define nord11 #BF616A
+#define nord12 #D08770
+#define nord13 #EBCB8B
+#define nord14 #A3BE8C
+#define nord15 #B48EAD
+
+*.foreground:   nord4
+*.background:   nord0
+*.cursorColor:  nord4
+! *fading: 35
+! *fadeColor: nord3
+
+*.color0: nord1
+*.color1: nord11
+*.color2: nord14
+*.color3: nord13
+*.color4: nord9
+*.color5: nord15
+*.color6: nord8
+*.color7: nord5
+*.color8: nord3
+*.color9: nord11
+*.color10: nord14
+*.color11: nord13
+*.color12: nord9
+*.color13: nord15
+*.color14: nord7
+*.color15: nord6
+
+URxvt.perl-ext-common: default,matcher
+URxvt.url-launcher: /usr/bin/xdg-open
+URxvt.matcher.button: 1
+
+URxvt.font: xft:Ubuntu Mono:size=13, xft:Symbola:size=13, xft:IPAmjMincho:size=13, xft:DejaVu Sans Mono:size=13
+!URxvt.letterSpace: -1
+URxvt.scrollBar: false
+
+! Disable ISO 14755 unicode input so we can use Ctrl-Shift bindings
+URxvt.iso14755:        false
+URxvt.iso14755_52:     false
+
+! Disable Ctrl-Alt-c & Ctrl-Alt-v bindings (optional)
+URxvt.keysym.C-M-c:    builtin-string:
+URxvt.keysym.C-M-v:    builtin-string:
+
+! Bind Ctrl-Shift-c & Ctrl-Shift-v to copy and paste
+! I dont know why, but I needed to use hex keysym values to get it to work
+URxvt.keysym.C-S-0x43: eval:selection_to_clipboard
+URxvt.keysym.C-S-0x56: eval:paste_clipboard
+
+
+xmessage*form.okay.shapeStyle: rectangle
+xmessage*Scrollbar.width: 1
+xmessage*Scrollbar.borderWidth: 1
+xmessage*message.scrollVertical: Never
+xmessage*message.scrollHorizontal: Never
+xmessage*baseTranslations:#augment\
+        <Key>Return:exit()\n\
+        <Key>space:exit()
+xmessage*Text.borderColor: IndianRed
+xmessage*Text.borderWidth: 0
+
+Xft.autohint: 0
+Xft.antialias: 1
+Xft.hinting: true
+Xft.hintstyle: hintslight
+!Xft.dpi: 108
+Xft.rgba: rgb
+Xft.lcdfilter: lcddefault
+

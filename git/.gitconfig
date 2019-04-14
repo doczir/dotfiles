@@ -1,0 +1,10 @@
+[gpg]
+	program = gpg2
+[user]
+	name = Robert Laszlo Doczi
+	email = doczi.r@gmail.com
+	signingkey = A13F2EAA826F968B
+[commit]
+	gpgsign = true
+[core]
+	excludesfile = /home/rdoczi/.gitignore_global

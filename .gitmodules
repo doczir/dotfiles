@@ -1,0 +1,15 @@
+[submodule "xmonad/.xmonad/xmonad/.xmonad/xmonad-git"]
+	path = xmonad/.xmonad/xmonad/.xmonad/xmonad-git
+	url = https://github.com/xmonad/xmonad.git
+[submodule "xmonad/.xmonad/xmonad-git"]
+	path = xmonad/.xmonad/xmonad-git
+	url = https://github.com/xmonad/xmonad.git
+[submodule "xmonad/.xmonad/xmonad-contrib-git"]
+	path = xmonad/.xmonad/xmonad-contrib-git
+	url = https://github.com/xmonad/xmonad-contrib.git
+[submodule "xmonad/.xmonad/xmobar-git"]
+	path = xmonad/.xmonad/xmobar-git
+	url = https://github.com/jaor/xmobar.git
+[submodule "zsh/.zprezto"]
+	path = zsh/.zprezto
+	url = https://github.com/doczir/prezto.git
