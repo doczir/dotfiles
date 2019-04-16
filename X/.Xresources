@@ -42,7 +42,7 @@ URxvt.perl-ext-common: default,matcher
 URxvt.url-launcher: /usr/bin/xdg-open
 URxvt.matcher.button: 1
 
-URxvt.font: xft:Ubuntu Mono:size=13, xft:Symbola:size=13, xft:IPAmjMincho:size=13, xft:DejaVu Sans Mono:size=13
+URxvt.font: xft:Monaco:size=11, xft:Symbola:size=11, xft:IPAmjMincho:size=11, xft:DejaVu Sans Mono:size=11
 !URxvt.letterSpace: -1
 URxvt.scrollBar: false
 
