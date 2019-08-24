@@ -12,4 +12,4 @@
 	url = https://github.com/jaor/xmobar.git
 [submodule "zsh/.zprezto"]
 	path = zsh/.zprezto
-	url = https://github.com/doczir/prezto.git
+	url = git@github.com:doczir/prezto.git
