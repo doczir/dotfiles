@@ -13,3 +13,12 @@
 [submodule "zsh/.zprezto"]
 	path = zsh/.zprezto
 	url = git@github.com:doczir/prezto.git
+[submodule "fzf/.local/share/fzf"]
+	path = fzf/.local/share/fzf
+	url = https://github.com/junegunn/fzf.git
+[submodule "nvm/.config/nvm"]
+	path = nvm/.config/nvm
+	url = https://github.com/nvm-sh/nvm.git
+[submodule "zsh/.local/share/oh-my-zsh/custom"]
+	path = zsh/.local/share/oh-my-zsh/custom
+	url = git@github.com:doczir/oh-my-zsh-custom.git
