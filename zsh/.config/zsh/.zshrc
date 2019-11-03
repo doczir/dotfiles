@@ -51,7 +51,7 @@ DISABLE_UPDATE_PROMPT="true"
 ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 # ZSH_DISABLE_COMPFIX=true
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -67,12 +67,16 @@ ENABLE_CORRECTION="true"
 # see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
+# Additional configs
+ZSH_HIGHLIGHT_MAXLENGTH=60
+
+
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting nvm fasd)
+plugins=(git zsh-autosuggestions fast-syntax-highlighting nvm fasd)
 
 
 # Setup Nix (needs to be done before sourcing oh-my-zsh, prezto etc., to make sure commands are available for plugins)
