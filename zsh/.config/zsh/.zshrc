@@ -77,8 +77,11 @@ plugins=(git zsh-autosuggestions zsh-syntax-highlighting nvm fasd)
 
 
 # Setup Nix (needs to be done before sourcing oh-my-zsh, prezto etc., to make sure commands are available for plugins)
-source $HOME/.nix-profile/etc/profile.d/nix.sh
-NIX_PATH=nixpkgs=$HOME/.nix-defexpr/channels/nixpkgs
+#[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
+if [ -f "$HOME"/.nix-profile/etc/profile.d/nix.sh ]; then
+  source $HOME/.nix-profile/etc/profile.d/nix.sh
+  NIX_PATH=nixpkgs=$HOME/.nix-defexpr/channels/nixpkgs
+fi
 
 source $ZSH/oh-my-zsh.sh
 
