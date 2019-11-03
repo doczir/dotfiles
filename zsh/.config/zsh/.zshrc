@@ -1,8 +1,10 @@
 # Be nice to OSX
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  source /etc/profile
+  source /etc/zprofile
   export LC_ALL=en_US.UTF-8  
   export LANG=en_US.UTF-8
+  # we need to be a bit more forceful on OSX as the /etc/zshrc overrides this...
+  export HISTFILE="$XDG_DATA_HOME"/zsh/history
 fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
@@ -48,7 +50,7 @@ DISABLE_UPDATE_PROMPT="true"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
+# ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
@@ -196,5 +198,4 @@ export SDKMAN_DIR="/home/rdoczi/.sdkman"
 [[ -s "/home/rdoczi/.sdkman/bin/sdkman-init.sh" ]] && source "/home/rdoczi/.sdkman/bin/sdkman-init.sh"
 
 export SBT_OPTS="-Xshare:on -XX:+UnlockDiagnosticVMOptions -XX:SharedArchiveFile=$HOME/.sbt/1.0/cds/app-cds.jsa -Dsbt.turbo=true"
-
 
