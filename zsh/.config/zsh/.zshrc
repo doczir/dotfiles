@@ -1,3 +1,10 @@
+# Be nice to OSX
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  source /etc/profile
+  export LC_ALL=en_US.UTF-8  
+  export LANG=en_US.UTF-8
+fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block, everything else may go below.
@@ -5,12 +12,13 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
+[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+
 zmodload zsh/zprof
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/rdoczi/.local/share/oh-my-zsh"
+export ZSH="$XDG_DATA_HOME"/oh-my-zsh
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -65,13 +73,19 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting nvm fasd)
+
+
+# Setup Nix (needs to be done before sourcing oh-my-zsh, prezto etc., to make sure commands are available for plugins)
+source $HOME/.nix-profile/etc/profile.d/nix.sh
+NIX_PATH=nixpkgs=$HOME/.nix-defexpr/channels/nixpkgs
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -168,7 +182,13 @@ alias ll="exa -lgh"
 alias la="exa -lagh"
 alias lt="exa -lagh --sort modified"
 alias lg="exa -lagh --git"
+alias tmux='tmux -f "$XDG_CONFIG_HOME"/tmux/tmux.conf'
+alias telnet="nix run nixpkgs.telnet -c telnet"
 
-# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
-[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/rdoczi/.sdkman"
+[[ -s "/home/rdoczi/.sdkman/bin/sdkman-init.sh" ]] && source "/home/rdoczi/.sdkman/bin/sdkman-init.sh"
+
+export SBT_OPTS="-Xshare:on -XX:+UnlockDiagnosticVMOptions -XX:SharedArchiveFile=$HOME/.sbt/1.0/cds/app-cds.jsa -Dsbt.turbo=true"
+
 

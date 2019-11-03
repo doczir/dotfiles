@@ -18,6 +18,8 @@ export PSQLRC="$XDG_CONFIG_HOME/pg/psqlrc"
 export PSQL_HISTORY="$XDG_CACHE_HOME/pg/psql_history"
 export PGPASSFILE="$XDG_CONFIG_HOME/pg/pgpass"
 export PGSERVICEFILE="$XDG_CONFIG_HOME/pg/pg_service.conf"
+export MYSQL_HISTFILE="$XDG_DATA_HOME"/mysql_history
 export HTTPIE_CONFIG_DIR="$XDG_CONFIG_HOME"/httpie
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
-
+export GRADLE_USER_HOME=$XDG_DATA_HOME/gradle
+export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
