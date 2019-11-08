@@ -1,7 +1,7 @@
 # Be nice to OSX
 if [[ "$OSTYPE" == "darwin"* ]]; then
   source /etc/zprofile
-  export LC_ALL=en_US.UTF-8  
+  export LC_ALL=en_US.UTF-8
   export LANG=en_US.UTF-8
   # we need to be a bit more forceful on OSX as the /etc/zshrc overrides this...
   export HISTFILE="$XDG_DATA_HOME"/zsh/history
@@ -83,7 +83,7 @@ ZSH_HIGHLIGHT_MAXLENGTH=60
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions fast-syntax-highlighting nvm fasd)
+plugins=(git zsh-autosuggestions fast-syntax-highlighting fasd mix)
 
 
 # Setup Nix (needs to be done before sourcing oh-my-zsh, prezto etc., to make sure commands are available for plugins)
@@ -93,6 +93,7 @@ if [ -f "$HOME"/.nix-profile/etc/profile.d/nix.sh ]; then
   NIX_PATH=nixpkgs=$HOME/.nix-defexpr/channels/nixpkgs
 fi
 
+ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -183,6 +184,25 @@ export FZF_DEFAULT_COMMAND='rg --files'
 
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
 
+# NVM lazy loading
+nvm() {
+    unset -f nvm
+    [ -z $NVM_BIN ] && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+    nvm "$@"
+}
+
+node() {
+    unset -f node
+    [ -z $NVM_BIN ] && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+    node "$@"
+}
+
+npm() {
+    unset -f npm
+    [ -z $NVM_BIN ] && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+    npm "$@"
+}
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -201,6 +221,10 @@ alias tmux='tmux -f "$XDG_CONFIG_HOME"/tmux/tmux.conf'
 if [[ "$OSTYPE" == "darwin"* ]]; then
   alias telnet="nix run nixpkgs.telnet -c telnet"
 fi
+
+alias nix-shell='nix-shell --run zsh'
+
+export LESS="-F -g -i -M -R -S -w -X -z-4"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/rdoczi/.sdkman"
