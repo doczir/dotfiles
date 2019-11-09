@@ -58,7 +58,8 @@ DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
-# ZSH_DISABLE_COMPFIX=true
+ZSH_DISABLE_COMPFIX=true
+export ZSH_COMPDUMP="$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -91,10 +92,6 @@ if [ -f "$HOME"/.nix-profile/etc/profile.d/nix.sh ]; then
   source $HOME/.nix-profile/etc/profile.d/nix.sh
   NIX_PATH=nixpkgs=$HOME/.nix-defexpr/channels/nixpkgs
 fi
-
-# Configure compinit
-ZSH_DISABLE_COMPFIX=true
-export ZSH_COMPDUMP="$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
 
 source $ZSH/oh-my-zsh.sh
 
