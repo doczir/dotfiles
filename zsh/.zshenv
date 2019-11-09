@@ -18,6 +18,3 @@ fi
 # decluter home
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}"/zsh
 
-# source machine specific environments
-[[ -f "$ZDOTDIR"/local.env ]] && source "$ZDOTDIR"/local.env
-
