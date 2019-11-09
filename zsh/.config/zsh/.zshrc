@@ -179,6 +179,7 @@ bind-git-helper() {
 bind-git-helper f b t r h
 unset -f bind-git-helper
 
+export FZF_DEFAULT_COMMAND='rg --files'
 
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
 
@@ -196,11 +197,14 @@ alias la="exa -lagh"
 alias lt="exa -lagh --sort modified"
 alias lg="exa -lagh --git"
 alias tmux='tmux -f "$XDG_CONFIG_HOME"/tmux/tmux.conf'
-alias telnet="nix run nixpkgs.telnet -c telnet"
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  alias telnet="nix run nixpkgs.telnet -c telnet"
+fi
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/rdoczi/.sdkman"
 [[ -s "/home/rdoczi/.sdkman/bin/sdkman-init.sh" ]] && source "/home/rdoczi/.sdkman/bin/sdkman-init.sh"
 
-export SBT_OPTS="-Xshare:on -XX:+UnlockDiagnosticVMOptions -XX:SharedArchiveFile=$HOME/.sbt/1.0/cds/app-cds.jsa -Dsbt.turbo=true"
+export SBT_OPTS="-Dsbt.turbo=true"
 
