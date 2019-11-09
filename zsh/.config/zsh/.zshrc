@@ -8,7 +8,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 # fix intellij terminal....
-if [[ ! "$TERMINAL_EMULATOR" == "JetBrains-JediTerm" ]]; then
+if [[ "$TERMINAL_EMULATOR" == "JetBrains-JediTerm" ]]; then
   source ~/.zshenv
 fi
 
