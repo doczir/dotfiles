@@ -92,7 +92,10 @@ if [ -f "$HOME"/.nix-profile/etc/profile.d/nix.sh ]; then
   NIX_PATH=nixpkgs=$HOME/.nix-defexpr/channels/nixpkgs
 fi
 
+# Configure compinit
 ZSH_DISABLE_COMPFIX=true
+export ZSH_COMPDUMP="$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration

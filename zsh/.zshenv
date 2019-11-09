@@ -12,10 +12,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   export LANG=en_US.UTF-8
 fi
 
-# decluter home
+# move zsh to config folder
 export ZDOTDIR="$XDG_CONFIG_HOME"/zsh
 
 # source machine specific environments
-export ZSH_COMPDUMP="$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
 [[ -f "$ZDOTDIR"/local.env ]] && source "$ZDOTDIR"/local.env
 
