@@ -1,8 +1,4 @@
-# Be nice to OSX
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  source /etc/zprofile
-  export LC_ALL=en_US.UTF-8
-  export LANG=en_US.UTF-8
   # we need to be a bit more forceful on OSX as the /etc/zshrc overrides this...
   export HISTFILE="$XDG_DATA_HOME"/zsh/history
 fi
@@ -22,6 +18,9 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ "$TERMINAL_EMULATOR" == "JetBrains-JediTerm" ]] && P10K_CONFIG=".p10k-ij.zsh" || P10K_CONFIG=".p10k.zsh"
 [[ ! -f ~/.config/zsh/"$P10K_CONFIG" ]] || source ~/.config/zsh/"$P10K_CONFIG"
+
+[[ ! -d "$XDG_CACHE_HOME"/zsh ]] && mkdir "$XDG_CACHE_HOME"/zsh
+[[ ! -d "$XDG_CACHE_HOME"/nv ]] && mkdir "$XDG_CACHE_HOME"/nv
 
 # Path to your oh-my-zsh installation.
 export ZSH="$XDG_DATA_HOME"/oh-my-zsh
