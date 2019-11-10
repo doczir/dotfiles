@@ -1,8 +1,8 @@
 [gpg]
-	program = gpg2
+	program = gpg
 [user]
 	name = Robert Laszlo Doczi
 	email = doczi.r@gmail.com
 	signingkey = A13F2EAA826F968B
 [commit]
-	gpgsign = true
+	gpgsign = false
