@@ -1,5 +1,5 @@
 # load envs in place of systemd if necessary
-if [[ "$OSTYPE" == "darwin"*  || "$TERM" == "linux" ]]; then
+if [[ "$OSTYPE" == "darwin"*  || "$TERM" == "linux" ]] || [[ -z $ENV_LOADED ]]; then
   # load env from environment.d in place of systemd
   set -a
   for envfile in $HOME/.config/environment.d/*.conf; do
