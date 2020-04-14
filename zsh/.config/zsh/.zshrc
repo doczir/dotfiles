@@ -1,214 +1,59 @@
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  # we need to be a bit more forceful on OSX as the /etc/zshrc overrides this...
-  export HISTFILE="$XDG_DATA_HOME"/zsh/history
-fi
-
-# fix intellij terminal....
-if [[ "$TERMINAL_EMULATOR" == "JetBrains-JediTerm" ]]; then
-  source ~/.zshenv
-fi
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block, everything else may go below.
-if [[ ! "$TERMINAL_EMULATOR" == "JetBrains-JediTerm" && -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
-[[ "$TERMINAL_EMULATOR" == "JetBrains-JediTerm" ]] && P10K_CONFIG=".p10k-ij.zsh" || P10K_CONFIG=".p10k.zsh"
-[[ ! -f ~/.config/zsh/"$P10K_CONFIG" ]] || source ~/.config/zsh/"$P10K_CONFIG"
-
-[[ ! -d "$XDG_CACHE_HOME"/zsh ]] && mkdir "$XDG_CACHE_HOME"/zsh
-[[ ! -d "$XDG_CACHE_HOME"/nv ]] && mkdir "$XDG_CACHE_HOME"/nv
-
-# Path to your oh-my-zsh installation.
-export ZSH="$XDG_DATA_HOME"/oh-my-zsh
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to automatically update without prompting.
-DISABLE_UPDATE_PROMPT="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
-ZSH_DISABLE_COMPFIX=true
-export ZSH_COMPDUMP="$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Additional configs
-ZSH_HIGHLIGHT_MAXLENGTH=60
-
-
-# Which plugins would you like to load?
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions fast-syntax-highlighting fasd mix)
-
+export PATH=$HOME/.local/bin:$HOME/.gem/ruby/2.7.0/bin:$PATH
 
 # Setup Nix (needs to be done before sourcing oh-my-zsh, prezto etc., to make sure commands are available for plugins)
-#[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
 if [ -f "$HOME"/.nix-profile/etc/profile.d/nix.sh ]; then
-  source $HOME/.nix-profile/etc/profile.d/nix.sh
-  NIX_PATH=nixpkgs=$HOME/.nix-defexpr/channels/nixpkgs
+ source $HOME/.nix-profile/etc/profile.d/nix.sh
+ NIX_PATH=nixpkgs=$HOME/.nix-defexpr/channels/nixpkgs
 fi
 
-source $ZSH/oh-my-zsh.sh
+#[[ $TERM == "alacritty" ]] && exec tmux -f "${XDG_CONFIG_HOME}/tmux/tmux.conf" -u
 
-# User configuration
+### Added by Zplugin's installer
+source "$ZDOTDIR/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+### End of Zplugin installer's chunk
 
-# export MANPATH="/usr/local/man:$MANPATH"
-export PATH="$HOME/.local/bin:$PATH"
+export EDITOR=nvim
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+zinit ice svn multisrc"{completion,directories,functions,history,key-bindings,misc,spectrum,termsupport}.zsh" pick"/dev/null"
+zinit snippet OMZ::lib
 
-export EDITOR='nvim'
-#
-# FZF
-export FZF_DEFAULT_OPTS="--preview 'bat --color=always {}' --preview-window hidden --bind '?:toggle-preview'"
-export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
-export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200' --preview-window right"
+zinit ice wait as"completion" lucid
+zinit snippet OMZ::plugins/docker/_docker
 
-# Will return non-zero status if the current directory is not managed by git
-is_in_git_repo() {
-  git rev-parse HEAD > /dev/null 2>&1
-}
+zinit ice wait as"completion" lucid
+zinit snippet OMZ::plugins/docker-compose/_docker-compose
 
-fzf-down() {
-  fzf --height 50% "$@" --border
-}
+zinit ice wait lucid
+zinit snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
 
-ggt() {
-  is_in_git_repo || return
-  git tag --sort -version:refname |
-    fzf-tmux --multi --preview-window right:70% \
-             --preview 'git show --color=always {} | head -'$LINES
-}
+zinit ice wait lucid
+zinit snippet OMZ::plugins/git/git.plugin.zsh
 
-ggf() {
-  is_in_git_repo || return
-  git -c color.status=always status --short |
-  fzf-down -m --ansi --nth 2..,.. \
-    --preview '(git diff --color=always -- {-1} | sed 1,4d; cat {-1}) | head -500' |
-  cut -c4- | sed 's/.* -> //'
-}
+zinit ice wait lucid
+zinit load rupa/z
 
-ggb() {
-  is_in_git_repo || return
-  git branch -a --color=always | grep -v '/HEAD\s' | sort |
-  fzf-down --ansi --multi --tac --preview-window right:70% \
-    --preview 'git log --oneline --graph --date=short --color=always --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
-  sed 's/^..//' | cut -d' ' -f1 |
-  sed 's#^remotes/##'
-}
+zinit ice wait lucid blockf atpull'zinit creinstall -q .'
+zinit load spwhitt/nix-zsh-completions
 
+zinit ice wait lucid blockf atpull'zinit creinstall -q .'
+zinit light zsh-users/zsh-completions
 
-ggh() {
-  is_in_git_repo || return
-  git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
-  fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
-    --header 'Press CTRL-S to toggle sort' \
-    --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always | head -'$LINES |
-  grep -o "[a-f0-9]\{7,\}"
-}
+zinit ice wait lucid atinit"ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay" atload"export FAST_HIGHLIGHT[whatis_chroma_type]=0"
+zinit light zdharma/fast-syntax-highlighting
 
-ggr() {
-  is_in_git_repo || return
-  git remote -v | awk '{print $1 "\t" $2}' | uniq |
-  fzf-down --tac \
-    --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" {1} | head -200' |
-  cut -d$'\t' -f1
-}
-
-join-lines() {
-  local item
-  while read item; do
-    echo -n "${(q)item} "
-  done
-}
-
-bind-git-helper() {
-  local c
-  for c in $@; do
-    eval "fzf-g$c-widget() { local result=\$(gg$c | join-lines); zle reset-prompt; LBUFFER+=\$result }"
-    eval "zle -N fzf-g$c-widget"
-    eval "bindkey '^g^$c' fzf-g$c-widget"
-  done
-}
-bind-git-helper f b t r h
-unset -f bind-git-helper
-
-export FZF_DEFAULT_COMMAND='rg --files'
+zinit ice wait lucid atload"_zsh_autosuggest_start"
+zinit light zsh-users/zsh-autosuggestions
 
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
 
-# NVM lazy loading
-nvm() {
-    unset -f nvm
-    [ -z $NVM_BIN ] && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-    nvm "$@"
-}
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+#[ -s "$NVM_DIR/alias/default" ] && export PATH="$NVM_DIR/versions/node/$(<$NVM_DIR/alias/default)/bin:$PATH"
+alias nvm="unalias nvm; [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; nvm $@"
 
-node() {
-    unset -f node
-    [ -z $NVM_BIN ] && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-    node "$@"
-}
-
-npm() {
-    unset -f npm
-    [ -z $NVM_BIN ] && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-    npm "$@"
-}
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
 alias zshrc="nvim $ZDOTDIR/.zshrc"
-alias pbcopy='xsel --clipboard --input'
-alias pbpaste='xsel --clipboard --output'
 alias ls="exa"
 alias l="exa -a"
 alias ll="exa -lgh"
@@ -216,18 +61,35 @@ alias la="exa -lagh"
 alias lt="exa -lagh --sort modified"
 alias lg="exa -lagh --git"
 alias tmux='tmux -f "$XDG_CONFIG_HOME"/tmux/tmux.conf'
+alias cat="bat -p"
+
+function tmw {
+  tmux split-window -dh "$*"
+}
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  alias telnet="nix run nixpkgs.telnet -c telnet"
+ alias telnet="nix run nixpkgs.telnet -c telnet"
 fi
 
 alias nix-shell='nix-shell --run zsh'
 
 export LESS="-F -g -i -M -R -S -w -X -z-4"
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/rdoczi/.sdkman"
 [[ -s "/home/rdoczi/.sdkman/bin/sdkman-init.sh" ]] && source "/home/rdoczi/.sdkman/bin/sdkman-init.sh"
 
 export SBT_OPTS="-Dsbt.turbo=true"
 
+setopt auto_cd
+setopt multios
+setopt prompt_subst
+
+eval "$(starship init zsh)"
+#eval "$(direnv hook zsh)"
+export RD_TOOLBOX_DIR="$HOME/Projects/rd-toolbox/"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/rdoczi/.local/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/home/rdoczi/.local/opt/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/rdoczi/.local/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/rdoczi/.local/opt/google-cloud-sdk/completion.zsh.inc'; fi
